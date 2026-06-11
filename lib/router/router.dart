@@ -7,16 +7,24 @@ import 'main_shell.dart';
 final router = GoRouter(
   initialLocation: '/dashboard',
   routes: [
-    ShellRoute(
-      builder: (context, state, child) => MainShell(child: child),
-      routes: [
-        GoRoute(
-          path: '/dashboard',
-          builder: (context, state) => const DashboardPage(),
+    StatefulShellRoute.indexedStack(
+      builder: (context, state, navigationShell) => MainShell(navigationShell: navigationShell),
+      branches: [
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: '/dashboard',
+              builder: (context, state) => const DashboardPage(),
+            ),
+          ],
         ),
-        GoRoute(
-          path: '/settings',
-          builder: (context, state) => const SettingsPage(),
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: '/settings',
+              builder: (context, state) => const SettingsPage(),
+            ),
+          ],
         ),
       ],
     ),

@@ -4,19 +4,19 @@ import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 
 class MainShell extends StatelessWidget {
-  const MainShell({super.key, required this.child});
+  const MainShell({super.key, required this.navigationShell});
 
-  final Widget child;
+  final StatefulNavigationShell navigationShell;
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
-      body: child,
+      body: navigationShell,
       bottomNavigationBar: NavigationBar(
-        selectedIndex: _calculateSelectedIndex(context),
-        onDestinationSelected: (index) => _onItemTapped(index, context),
+        selectedIndex: navigationShell.currentIndex,
+        onDestinationSelected: (index) => _onItemTapped(index),
         destinations: [
           NavigationDestination(
             icon: Icon(Icons.dashboard_outlined),
@@ -33,20 +33,11 @@ class MainShell extends StatelessWidget {
     );
   }
 
-  int _calculateSelectedIndex(BuildContext context) {
-    final location = GoRouterState.of(context).uri.path;
-    if (location.startsWith('/dashboard')) return 0;
-    if (location.startsWith('/settings')) return 1;
-    return 0;
-  }
-
-  void _onItemTapped(int index, BuildContext context) {
+  void _onItemTapped(int index) {
     SystemSound.play(SystemSoundType.click);
-    switch (index) {
-      case 0:
-        context.go('/dashboard');
-      case 1:
-        context.go('/settings');
-    }
+    navigationShell.goBranch(
+      index,
+      initialLocation: index == navigationShell.currentIndex,
+    );
   }
 }
