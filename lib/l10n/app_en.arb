@@ -4,5 +4,6 @@
   "tabbarSettings": "settings",
   "themeSystem": "system",
   "themeLight": "light",
-  "themeDark": "dark"
+  "themeDark": "dark",
+  "dashborardTitle": "my savings"
 }

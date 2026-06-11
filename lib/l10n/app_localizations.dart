@@ -127,6 +127,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'dark'**
   String get themeDark;
+
+  /// No description provided for @dashborardTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'my savings'**
+  String get dashborardTitle;
 }
 
 class _AppLocalizationsDelegate

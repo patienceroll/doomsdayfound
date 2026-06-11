@@ -1,5 +1,6 @@
 import 'package:doomsdayfound/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 
 class MainShell extends StatelessWidget {
@@ -40,6 +41,7 @@ class MainShell extends StatelessWidget {
   }
 
   void _onItemTapped(int index, BuildContext context) {
+    SystemSound.play(SystemSoundType.click);
     switch (index) {
       case 0:
         context.go('/dashboard');

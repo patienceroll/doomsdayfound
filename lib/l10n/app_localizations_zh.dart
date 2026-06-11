@@ -22,4 +22,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get themeDark => '深色';
+
+  @override
+  String get dashborardTitle => '我的存款';
 }

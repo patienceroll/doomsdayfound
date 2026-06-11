@@ -22,4 +22,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get themeDark => 'dark';
+
+  @override
+  String get dashborardTitle => 'my savings';
 }
