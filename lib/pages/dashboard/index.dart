@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:doomsdayfound/components/rolling_number.dart';
+import 'package:doomsdayfound/components/count_up.dart';
 import 'package:flutter/material.dart';
 
 import 'package:doomsdayfound/l10n/app_localizations.dart';
@@ -40,7 +40,7 @@ class _DashboardPageState extends State<DashboardPage> {
     return Scaffold(
       appBar: AppBar(title: Text(l10n.dashborardTitle)),
       body: Center(
-        child: RollingNumber(
+        child: CountUp(
           value: _value,
           style: Theme.of(context).textTheme.headlineLarge,
         ),

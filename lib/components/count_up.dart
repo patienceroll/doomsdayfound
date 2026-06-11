@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class RollingNumber extends StatelessWidget {
+class CountUp extends StatelessWidget {
   final double value;
   final double initialValue;
   final String separator;
@@ -10,7 +10,7 @@ class RollingNumber extends StatelessWidget {
   final TextStyle? style;
   final Curve curve;
 
-  const RollingNumber({
+  const CountUp({
     super.key,
     required this.value,
     this.initialValue = 0,
