@@ -9,10 +9,10 @@ class AppLocalizationsZh extends AppLocalizations {
   AppLocalizationsZh([String locale = 'zh']) : super(locale);
 
   @override
-  String get appTitle => '末日发现';
+  String get tabbarOverview => '总览';
 
   @override
-  String get helloWorld => '你好，世界';
+  String get tabbarSettings => '设置';
 
   @override
   String get themeSystem => '跟随系统';

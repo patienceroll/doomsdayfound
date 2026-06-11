@@ -1,14 +1,8 @@
 {
   "@@locale": "en",
-  "appTitle": "Doomsday Found",
-  "@appTitle": {
-    "description": "The application title"
-  },
-  "helloWorld": "Hello World",
-  "@helloWorld": {
-    "description": "Hello world message"
-  },
-  "themeSystem": "System",
-  "themeLight": "Light",
-  "themeDark": "Dark"
+  "tabbarOverview": "overview",
+  "tabbarSettings": "settings",
+  "themeSystem": "system",
+  "themeLight": "light",
+  "themeDark": "dark"
 }

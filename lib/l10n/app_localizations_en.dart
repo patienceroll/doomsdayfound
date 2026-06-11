@@ -9,17 +9,17 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get appTitle => 'Doomsday Found';
+  String get tabbarOverview => 'overview';
 
   @override
-  String get helloWorld => 'Hello World';
+  String get tabbarSettings => 'settings';
 
   @override
-  String get themeSystem => 'System';
+  String get themeSystem => 'system';
 
   @override
-  String get themeLight => 'Light';
+  String get themeLight => 'light';
 
   @override
-  String get themeDark => 'Dark';
+  String get themeDark => 'dark';
 }

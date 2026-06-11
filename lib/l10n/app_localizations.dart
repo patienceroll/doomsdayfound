@@ -98,34 +98,34 @@ abstract class AppLocalizations {
     Locale('zh'),
   ];
 
-  /// The application title
+  /// No description provided for @tabbarOverview.
   ///
   /// In en, this message translates to:
-  /// **'Doomsday Found'**
-  String get appTitle;
+  /// **'overview'**
+  String get tabbarOverview;
 
-  /// Hello world message
+  /// No description provided for @tabbarSettings.
   ///
   /// In en, this message translates to:
-  /// **'Hello World'**
-  String get helloWorld;
+  /// **'settings'**
+  String get tabbarSettings;
 
   /// No description provided for @themeSystem.
   ///
   /// In en, this message translates to:
-  /// **'System'**
+  /// **'system'**
   String get themeSystem;
 
   /// No description provided for @themeLight.
   ///
   /// In en, this message translates to:
-  /// **'Light'**
+  /// **'light'**
   String get themeLight;
 
   /// No description provided for @themeDark.
   ///
   /// In en, this message translates to:
-  /// **'Dark'**
+  /// **'dark'**
   String get themeDark;
 }
 
