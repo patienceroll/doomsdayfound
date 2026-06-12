@@ -35,6 +35,7 @@ class MainShell extends StatelessWidget {
 
   void _onItemTapped(int index) {
     SystemSound.play(SystemSoundType.click);
+    HapticFeedback.lightImpact();
     navigationShell.goBranch(
       index,
       initialLocation: index == navigationShell.currentIndex,
