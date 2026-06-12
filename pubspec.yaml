@@ -3,6 +3,9 @@ description: "A new Flutter project."
 publish_to: 'none'
 version: 0.1.0+1
 
+
+## flutter gen-l10n
+## dart run build_runner build
 environment:
   sdk: ^3.12.1
 

@@ -5,5 +5,6 @@
   "themeSystem": "system",
   "themeLight": "light",
   "themeDark": "dark",
-  "dashborardTitle": "my savings"
+  "dashboardTitle": "my wallet",
+  "dashboradCreateBank": "Create wallet"
 }

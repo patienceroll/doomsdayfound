@@ -5,5 +5,6 @@
   "themeSystem": "跟随系统",
   "themeLight": "浅色",
   "themeDark": "深色",
-  "dashborardTitle": "我的存款"
+  "dashboardTitle": "我的存款",
+  "dashboradCreateBank": "创建余额钱包"
 }

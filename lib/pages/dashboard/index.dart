@@ -13,7 +13,7 @@ class DashboardPage extends ConsumerWidget {
     final balanceAsync = ref.watch(balanceProvider);
 
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.dashborardTitle)),
+      appBar: AppBar(title: Text(l10n.dashboardTitle)),
       body: balanceAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, s) => Center(child: Text('Error: $e')),
@@ -21,7 +21,7 @@ class DashboardPage extends ConsumerWidget {
             ? Center(
                 child: ElevatedButton(
                   onPressed: () {},
-                  child: const Text('创建'),
+                  child:  Text(l10n.dashboradCreateBank),
                 ),
               )
             : Center(child: Text('Balance: ${snapshot.totalBalance}')),

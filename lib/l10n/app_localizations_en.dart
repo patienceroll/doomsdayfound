@@ -24,5 +24,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get themeDark => 'dark';
 
   @override
-  String get dashborardTitle => 'my savings';
+  String get dashboardTitle => 'my wallet';
+
+  @override
+  String get dashboradCreateBank => 'Create wallet';
 }

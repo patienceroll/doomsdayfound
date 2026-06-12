@@ -24,5 +24,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get themeDark => '深色';
 
   @override
-  String get dashborardTitle => '我的存款';
+  String get dashboardTitle => '我的存款';
+
+  @override
+  String get dashboradCreateBank => '创建余额钱包';
 }

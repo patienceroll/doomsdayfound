@@ -128,11 +128,17 @@ abstract class AppLocalizations {
   /// **'dark'**
   String get themeDark;
 
-  /// No description provided for @dashborardTitle.
+  /// No description provided for @dashboardTitle.
   ///
   /// In en, this message translates to:
-  /// **'my savings'**
-  String get dashborardTitle;
+  /// **'my wallet'**
+  String get dashboardTitle;
+
+  /// No description provided for @dashboradCreateBank.
+  ///
+  /// In en, this message translates to:
+  /// **'Create wallet'**
+  String get dashboradCreateBank;
 }
 
 class _AppLocalizationsDelegate
