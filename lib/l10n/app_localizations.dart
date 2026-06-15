@@ -207,15 +207,27 @@ abstract class AppLocalizations {
   String get dashboardBalanceInputInvalidAmount;
 
   /// No description provided for @dashboardSpendTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Expense'**
   String get dashboardSpendTitle;
 
   /// No description provided for @dashboardSpendHint.
+  ///
+  /// In en, this message translates to:
+  /// **'How much did you spend'**
   String get dashboardSpendHint;
 
   /// No description provided for @dashboardSpendRemark.
+  ///
+  /// In en, this message translates to:
+  /// **'Note'**
   String get dashboardSpendRemark;
 
   /// No description provided for @dashboardModifyBalance.
+  ///
+  /// In en, this message translates to:
+  /// **'Modify balance'**
   String get dashboardModifyBalance;
 }
 

@@ -4,8 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:doomsdayfound/database/db_helper.dart';
 import 'package:doomsdayfound/l10n/app_localizations.dart';
 import 'package:doomsdayfound/providers/balance_provider.dart';
-import 'package:doomsdayfound/pages/dashboard/balance_input_sheet.dart';
-import 'package:doomsdayfound/pages/dashboard/spend_sheet.dart';
+import 'package:doomsdayfound/pages/dashboard/components/balance_input_sheet.dart';
+import 'package:doomsdayfound/pages/dashboard/components/modify_balance_sheet.dart';
+import 'package:doomsdayfound/pages/dashboard/components/spend_sheet.dart';
 
 class DashboardPage extends ConsumerWidget {
   const DashboardPage({super.key});
@@ -20,6 +21,18 @@ class DashboardPage extends ConsumerWidget {
           ?.map((c) => (name: c.name, balance: c.balance, type: c.type))
           .toList(),
     );
+
+    ref.invalidate(balanceProvider);
+  }
+
+  Future<void> _openModifyBalance(
+    BuildContext context,
+    WidgetRef ref,
+  ) async {
+    final newBalance = await showModifyBalanceSheet(context);
+    if (newBalance == null) return;
+
+    await saveBalanceSnapshot(totalBalance: newBalance);
 
     ref.invalidate(balanceProvider);
   }
@@ -74,7 +87,8 @@ class DashboardPage extends ConsumerWidget {
                         ),
                         const SizedBox(width: 12),
                         FilledButton.icon(
-                          onPressed: () => _openBalanceInput(context, ref),
+                          onPressed: () =>
+                              _openModifyBalance(context, ref),
                           icon: const Icon(Icons.edit),
                           label: Text(l10n.dashboardModifyBalance),
                         ),

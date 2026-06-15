@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import 'package:doomsdayfound/l10n/app_localizations.dart';
+import 'amount_input_formatter.dart';
 
-Future<double?> showSpendSheet(BuildContext context) {
+Future<double?> showModifyBalanceSheet(BuildContext context) {
   return showModalBottomSheet<double>(
     context: context,
     isScrollControlled: true,
@@ -11,66 +11,31 @@ Future<double?> showSpendSheet(BuildContext context) {
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
     ),
-    builder: (_) => const _SpendSheet(),
+    builder: (_) => const _ModifyBalanceSheet(),
   );
 }
 
-class _AmountInputFormatter extends TextInputFormatter {
-  @override
-  TextEditingValue formatEditUpdate(
-    TextEditingValue oldValue,
-    TextEditingValue newValue,
-  ) {
-    final text = newValue.text;
-    if (text.isEmpty) return newValue;
-
-    final regex = RegExp(r'^\d+\.?\d{0,2}$');
-    if (regex.hasMatch(text)) return newValue;
-
-    final dotIndex = text.indexOf('.');
-    if (dotIndex == -1) {
-      return TextEditingValue(
-        text: text.replaceAll(RegExp(r'[^\d]'), ''),
-        selection: newValue.selection,
-      );
-    }
-
-    final integerPart =
-        text.substring(0, dotIndex).replaceAll(RegExp(r'[^\d]'), '');
-    final decimalPart =
-        text.substring(dotIndex + 1).replaceAll(RegExp(r'[^\d]'), '');
-    final finalText =
-        '$integerPart.${decimalPart.substring(0, decimalPart.length.clamp(0, 2))}';
-    return TextEditingValue(
-      text: finalText,
-      selection: TextSelection.collapsed(offset: finalText.length),
-    );
-  }
-}
-
-class _SpendSheet extends StatefulWidget {
-  const _SpendSheet();
+class _ModifyBalanceSheet extends StatefulWidget {
+  const _ModifyBalanceSheet();
 
   @override
-  State<_SpendSheet> createState() => _SpendSheetState();
+  State<_ModifyBalanceSheet> createState() => _ModifyBalanceSheetState();
 }
 
-class _SpendSheetState extends State<_SpendSheet> {
-  final _amountController = TextEditingController();
-  final _remarkController = TextEditingController();
+class _ModifyBalanceSheetState extends State<_ModifyBalanceSheet> {
+  final _controller = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
-    _amountController.dispose();
-    _remarkController.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
   void _confirm() {
     if (!_formKey.currentState!.validate()) return;
-    final amount = double.tryParse(_amountController.text) ?? 0;
-    Navigator.of(context).pop(amount);
+    final value = double.tryParse(_controller.text) ?? 0;
+    Navigator.of(context).pop(value);
   }
 
   @override
@@ -100,7 +65,7 @@ class _SpendSheetState extends State<_SpendSheet> {
                 children: [
                   Expanded(
                     child: Text(
-                      l10n.dashboardSpendTitle,
+                      l10n.dashboardModifyBalance,
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                   ),
@@ -114,15 +79,15 @@ class _SpendSheetState extends State<_SpendSheet> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               child: TextFormField(
-                controller: _amountController,
+                controller: _controller,
                 decoration: InputDecoration(
-                  labelText: l10n.dashboardSpendHint,
+                  labelText: l10n.dashboardBalanceInputTotalHint,
                   prefixText: '¥ ',
                   border: const OutlineInputBorder(),
                 ),
                 keyboardType:
                     const TextInputType.numberWithOptions(decimal: true),
-                inputFormatters: [_AmountInputFormatter()],
+                inputFormatters: [AmountInputFormatter()],
                 autofocus: true,
                 validator: (v) {
                   if (v == null || v.trim().isEmpty) {
@@ -134,16 +99,6 @@ class _SpendSheetState extends State<_SpendSheet> {
                   }
                   return null;
                 },
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: TextFormField(
-                controller: _remarkController,
-                decoration: InputDecoration(
-                  labelText: l10n.dashboardSpendRemark,
-                  border: const OutlineInputBorder(),
-                ),
               ),
             ),
             const SizedBox(height: 8),
