@@ -21,5 +21,7 @@
   "dashboardSpendTitle": "Expense",
   "dashboardSpendHint": "How much did you spend",
   "dashboardSpendRemark": "Note",
+  "dashboardEarnTitle": "Income",
+  "dashboardEarnHint": "How much did you earn",
   "dashboardModifyBalance": "Modify balance"
 }

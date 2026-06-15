@@ -40,23 +40,23 @@ Future<void> saveBalanceSnapshot({
   }
 }
 
-Future<void> recordExpense({
+Future<void> recordTransaction({
+  required int snapshotId,
+  required double newBalance,
   required double amount,
-  required double currentBalance,
+  required TransactionType type,
   String? remark,
 }) async {
   final db = await getDatabase();
-  final newBalance = currentBalance - amount;
 
-  final snapshotId = await db.into(db.balanceSnapshots).insert(
-    BalanceSnapshotsCompanion.insert(totalBalance: newBalance),
-  );
+  await (db.update(db.balanceSnapshots)..where((t) => t.id.equals(snapshotId)))
+      .write(BalanceSnapshotsCompanion(totalBalance: Value(newBalance)));
 
   await db.into(db.transactions).insert(
     TransactionsCompanion.insert(
       snapshotId: snapshotId,
       amount: amount,
-      type: TransactionType.cost,
+      type: type,
       remark: remark != null ? Value<String?>(remark) : const Value.absent(),
     ),
   );

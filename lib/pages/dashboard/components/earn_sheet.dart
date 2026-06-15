@@ -3,21 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:doomsdayfound/l10n/app_localizations.dart';
 import 'package:doomsdayfound/util/money/input_formatter.dart';
 
-Future<({double amount, String? remark})?> showSpendSheet(BuildContext context) {
+Future<({double amount, String? remark})?> showEarnSheet(BuildContext context) {
   return showDialog<({double amount, String? remark})>(
     context: context,
-    builder: (_) => const _SpendSheet(),
+    builder: (_) => const _EarnSheet(),
   );
 }
 
-class _SpendSheet extends StatefulWidget {
-  const _SpendSheet();
+class _EarnSheet extends StatefulWidget {
+  const _EarnSheet();
 
   @override
-  State<_SpendSheet> createState() => _SpendSheetState();
+  State<_EarnSheet> createState() => _EarnSheetState();
 }
 
-class _SpendSheetState extends State<_SpendSheet> {
+class _EarnSheetState extends State<_EarnSheet> {
   final _amountController = TextEditingController();
   final _remarkController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -53,7 +53,7 @@ class _SpendSheetState extends State<_SpendSheet> {
                 children: [
                   Expanded(
                     child: Text(
-                      l10n.dashboardSpendTitle,
+                      l10n.dashboardEarnTitle,
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                   ),
@@ -67,7 +67,7 @@ class _SpendSheetState extends State<_SpendSheet> {
               TextFormField(
                 controller: _amountController,
                 decoration: InputDecoration(
-                  labelText: l10n.dashboardSpendHint,
+                  labelText: l10n.dashboardEarnHint,
                   prefixText: '¥ ',
                   border: const OutlineInputBorder(),
                 ),

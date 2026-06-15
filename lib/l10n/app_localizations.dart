@@ -224,6 +224,18 @@ abstract class AppLocalizations {
   /// **'Note'**
   String get dashboardSpendRemark;
 
+  /// No description provided for @dashboardEarnTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Income'**
+  String get dashboardEarnTitle;
+
+  /// No description provided for @dashboardEarnHint.
+  ///
+  /// In en, this message translates to:
+  /// **'How much did you earn'**
+  String get dashboardEarnHint;
+
   /// No description provided for @dashboardModifyBalance.
   ///
   /// In en, this message translates to:
