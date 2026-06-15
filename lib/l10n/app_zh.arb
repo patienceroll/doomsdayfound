@@ -6,5 +6,16 @@
   "themeLight": "浅色",
   "themeDark": "深色",
   "dashboardTitle": "我的存款",
-  "dashboradCreateBank": "创建余额钱包"
+  "dashboradCreateBank": "创建余额钱包",
+  "dashboardBalanceInputTitle": "录入余额",
+  "dashboardBalanceInputModeTotal": "总余额",
+  "dashboardBalanceInputModeCategory": "分类录入",
+  "dashboardBalanceInputTotalHint": "请输入总余额",
+  "dashboardBalanceInputCategoryName": "类目名称",
+  "dashboardBalanceInputAmount": "金额",
+  "dashboardBalanceInputAddCategory": "添加类目",
+  "dashboardBalanceInputTotal": "合计",
+  "dashboardBalanceInputConfirm": "确认",
+  "dashboardBalanceInputRequired": "请填写此项",
+  "dashboardBalanceInputInvalidAmount": "请输入有效金额"
 }

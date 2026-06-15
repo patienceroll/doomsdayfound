@@ -28,4 +28,37 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get dashboradCreateBank => '创建余额钱包';
+
+  @override
+  String get dashboardBalanceInputTitle => '录入余额';
+
+  @override
+  String get dashboardBalanceInputModeTotal => '总余额';
+
+  @override
+  String get dashboardBalanceInputModeCategory => '分类录入';
+
+  @override
+  String get dashboardBalanceInputTotalHint => '请输入总余额';
+
+  @override
+  String get dashboardBalanceInputCategoryName => '类目名称';
+
+  @override
+  String get dashboardBalanceInputAmount => '金额';
+
+  @override
+  String get dashboardBalanceInputAddCategory => '添加类目';
+
+  @override
+  String get dashboardBalanceInputTotal => '合计';
+
+  @override
+  String get dashboardBalanceInputConfirm => '确认';
+
+  @override
+  String get dashboardBalanceInputRequired => '请填写此项';
+
+  @override
+  String get dashboardBalanceInputInvalidAmount => '请输入有效金额';
 }

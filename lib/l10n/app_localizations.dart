@@ -139,6 +139,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Create wallet'**
   String get dashboradCreateBank;
+
+  /// No description provided for @dashboardBalanceInputTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter Balance'**
+  String get dashboardBalanceInputTitle;
+
+  /// No description provided for @dashboardBalanceInputModeTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Total'**
+  String get dashboardBalanceInputModeTotal;
+
+  /// No description provided for @dashboardBalanceInputModeCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'By Category'**
+  String get dashboardBalanceInputModeCategory;
+
+  /// No description provided for @dashboardBalanceInputTotalHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter total balance'**
+  String get dashboardBalanceInputTotalHint;
+
+  /// No description provided for @dashboardBalanceInputCategoryName.
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get dashboardBalanceInputCategoryName;
+
+  /// No description provided for @dashboardBalanceInputAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get dashboardBalanceInputAmount;
+
+  /// No description provided for @dashboardBalanceInputAddCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Add category'**
+  String get dashboardBalanceInputAddCategory;
+
+  /// No description provided for @dashboardBalanceInputTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Total'**
+  String get dashboardBalanceInputTotal;
+
+  /// No description provided for @dashboardBalanceInputConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm'**
+  String get dashboardBalanceInputConfirm;
+
+  /// No description provided for @dashboardBalanceInputRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Required'**
+  String get dashboardBalanceInputRequired;
+
+  /// No description provided for @dashboardBalanceInputInvalidAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid amount'**
+  String get dashboardBalanceInputInvalidAmount;
 }
 
 class _AppLocalizationsDelegate

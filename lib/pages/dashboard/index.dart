@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:doomsdayfound/l10n/app_localizations.dart';
 import 'package:doomsdayfound/providers/balance_provider.dart';
+import 'package:doomsdayfound/pages/dashboard/balance_input_sheet.dart';
 
 class DashboardPage extends ConsumerWidget {
   const DashboardPage({super.key});
@@ -20,11 +21,23 @@ class DashboardPage extends ConsumerWidget {
         data: (snapshot) => snapshot == null
             ? Center(
                 child: ElevatedButton(
-                  onPressed: () {},
-                  child:  Text(l10n.dashboradCreateBank),
+                  onPressed: () => showBalanceInputSheet(context),
+                  child: Text(l10n.dashboradCreateBank),
                 ),
               )
-            : Center(child: Text('Balance: ${snapshot.totalBalance}')),
+            : Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text('Balance: ${snapshot.totalBalance}'),
+                    const SizedBox(height: 16),
+                    FilledButton(
+                      onPressed: () => showBalanceInputSheet(context),
+                      child: Text(l10n.dashboardBalanceInputTitle),
+                    ),
+                  ],
+                ),
+              ),
       ),
     );
   }

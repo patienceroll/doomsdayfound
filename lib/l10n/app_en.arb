@@ -6,5 +6,16 @@
   "themeLight": "light",
   "themeDark": "dark",
   "dashboardTitle": "my wallet",
-  "dashboradCreateBank": "Create wallet"
+  "dashboradCreateBank": "Create wallet",
+  "dashboardBalanceInputTitle": "Enter Balance",
+  "dashboardBalanceInputModeTotal": "Total",
+  "dashboardBalanceInputModeCategory": "By Category",
+  "dashboardBalanceInputTotalHint": "Enter total balance",
+  "dashboardBalanceInputCategoryName": "Category",
+  "dashboardBalanceInputAmount": "Amount",
+  "dashboardBalanceInputAddCategory": "Add category",
+  "dashboardBalanceInputTotal": "Total",
+  "dashboardBalanceInputConfirm": "Confirm",
+  "dashboardBalanceInputRequired": "Required",
+  "dashboardBalanceInputInvalidAmount": "Invalid amount"
 }

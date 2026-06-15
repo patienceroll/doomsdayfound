@@ -28,4 +28,37 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get dashboradCreateBank => 'Create wallet';
+
+  @override
+  String get dashboardBalanceInputTitle => 'Enter Balance';
+
+  @override
+  String get dashboardBalanceInputModeTotal => 'Total';
+
+  @override
+  String get dashboardBalanceInputModeCategory => 'By Category';
+
+  @override
+  String get dashboardBalanceInputTotalHint => 'Enter total balance';
+
+  @override
+  String get dashboardBalanceInputCategoryName => 'Category';
+
+  @override
+  String get dashboardBalanceInputAmount => 'Amount';
+
+  @override
+  String get dashboardBalanceInputAddCategory => 'Add category';
+
+  @override
+  String get dashboardBalanceInputTotal => 'Total';
+
+  @override
+  String get dashboardBalanceInputConfirm => 'Confirm';
+
+  @override
+  String get dashboardBalanceInputRequired => 'Required';
+
+  @override
+  String get dashboardBalanceInputInvalidAmount => 'Invalid amount';
 }
