@@ -17,5 +17,9 @@
   "dashboardBalanceInputTotal": "合计",
   "dashboardBalanceInputConfirm": "确认",
   "dashboardBalanceInputRequired": "请填写此项",
-  "dashboardBalanceInputInvalidAmount": "请输入有效金额"
+  "dashboardBalanceInputInvalidAmount": "请输入有效金额",
+  "dashboardSpendTitle": "花钱了",
+  "dashboardSpendHint": "花了多少钱",
+  "dashboardSpendRemark": "备注",
+  "dashboardModifyBalance": "修改余额"
 }

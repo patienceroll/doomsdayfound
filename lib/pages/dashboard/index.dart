@@ -5,6 +5,7 @@ import 'package:doomsdayfound/database/db_helper.dart';
 import 'package:doomsdayfound/l10n/app_localizations.dart';
 import 'package:doomsdayfound/providers/balance_provider.dart';
 import 'package:doomsdayfound/pages/dashboard/balance_input_sheet.dart';
+import 'package:doomsdayfound/pages/dashboard/spend_sheet.dart';
 
 class DashboardPage extends ConsumerWidget {
   const DashboardPage({super.key});
@@ -18,6 +19,22 @@ class DashboardPage extends ConsumerWidget {
       accounts: result.categories
           ?.map((c) => (name: c.name, balance: c.balance, type: c.type))
           .toList(),
+    );
+
+    ref.invalidate(balanceProvider);
+  }
+
+  Future<void> _openSpend(
+    BuildContext context,
+    WidgetRef ref,
+    double currentBalance,
+  ) async {
+    final amount = await showSpendSheet(context);
+    if (amount == null) return;
+
+    await recordExpense(
+      amount: amount,
+      currentBalance: currentBalance,
     );
 
     ref.invalidate(balanceProvider);
@@ -45,10 +62,23 @@ class DashboardPage extends ConsumerWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text('Balance: ${snapshot.totalBalance}'),
-                    const SizedBox(height: 16),
-                    FilledButton(
-                      onPressed: () => _openBalanceInput(context, ref),
-                      child: Text(l10n.dashboardBalanceInputTitle),
+                    const SizedBox(height: 24),
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        FilledButton.tonalIcon(
+                          onPressed: () =>
+                              _openSpend(context, ref, snapshot.totalBalance),
+                          icon: const Icon(Icons.remove_circle_outline),
+                          label: Text(l10n.dashboardSpendTitle),
+                        ),
+                        const SizedBox(width: 12),
+                        FilledButton.icon(
+                          onPressed: () => _openBalanceInput(context, ref),
+                          icon: const Icon(Icons.edit),
+                          label: Text(l10n.dashboardModifyBalance),
+                        ),
+                      ],
                     ),
                   ],
                 ),

@@ -61,4 +61,16 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get dashboardBalanceInputInvalidAmount => '请输入有效金额';
+
+  @override
+  String get dashboardSpendTitle => '花钱了';
+
+  @override
+  String get dashboardSpendHint => '花了多少钱';
+
+  @override
+  String get dashboardSpendRemark => '备注';
+
+  @override
+  String get dashboardModifyBalance => '修改余额';
 }

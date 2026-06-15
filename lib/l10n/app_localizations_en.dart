@@ -61,4 +61,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get dashboardBalanceInputInvalidAmount => 'Invalid amount';
+
+  @override
+  String get dashboardSpendTitle => 'Expense';
+
+  @override
+  String get dashboardSpendHint => 'How much did you spend';
+
+  @override
+  String get dashboardSpendRemark => 'Note';
+
+  @override
+  String get dashboardModifyBalance => 'Modify balance';
 }

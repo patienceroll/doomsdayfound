@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as path;
@@ -37,4 +38,26 @@ Future<void> saveBalanceSnapshot({
       );
     }
   }
+}
+
+Future<void> recordExpense({
+  required double amount,
+  required double currentBalance,
+  String? remark,
+}) async {
+  final db = await getDatabase();
+  final newBalance = currentBalance - amount;
+
+  final snapshotId = await db.into(db.balanceSnapshots).insert(
+    BalanceSnapshotsCompanion.insert(totalBalance: newBalance),
+  );
+
+  await db.into(db.transactions).insert(
+    TransactionsCompanion.insert(
+      snapshotId: snapshotId,
+      amount: amount,
+      type: TransactionType.cost,
+      remark: remark != null ? Value<String?>(remark) : const Value.absent(),
+    ),
+  );
 }

@@ -17,5 +17,9 @@
   "dashboardBalanceInputTotal": "Total",
   "dashboardBalanceInputConfirm": "Confirm",
   "dashboardBalanceInputRequired": "Required",
-  "dashboardBalanceInputInvalidAmount": "Invalid amount"
+  "dashboardBalanceInputInvalidAmount": "Invalid amount",
+  "dashboardSpendTitle": "Expense",
+  "dashboardSpendHint": "How much did you spend",
+  "dashboardSpendRemark": "Note",
+  "dashboardModifyBalance": "Modify balance"
 }

@@ -205,6 +205,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Invalid amount'**
   String get dashboardBalanceInputInvalidAmount;
+
+  /// No description provided for @dashboardSpendTitle.
+  String get dashboardSpendTitle;
+
+  /// No description provided for @dashboardSpendHint.
+  String get dashboardSpendHint;
+
+  /// No description provided for @dashboardSpendRemark.
+  String get dashboardSpendRemark;
+
+  /// No description provided for @dashboardModifyBalance.
+  String get dashboardModifyBalance;
 }
 
 class _AppLocalizationsDelegate
