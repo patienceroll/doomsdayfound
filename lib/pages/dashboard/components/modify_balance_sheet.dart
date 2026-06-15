@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:doomsdayfound/l10n/app_localizations.dart';
-import 'amount_input_formatter.dart';
+import 'package:doomsdayfound/util/money/input_formatter.dart';
 
 Future<double?> showModifyBalanceSheet(BuildContext context) {
   return showModalBottomSheet<double>(

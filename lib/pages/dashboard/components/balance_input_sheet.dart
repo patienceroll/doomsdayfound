@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:doomsdayfound/l10n/app_localizations.dart';
-import 'amount_input_formatter.dart';
+import 'package:doomsdayfound/util/money/input_formatter.dart';
 
 class BalanceInputResult {
   final double totalBalance;
