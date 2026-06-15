@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:doomsdayfound/l10n/app_localizations.dart';
@@ -23,15 +23,10 @@ class CategoryEntry {
   });
 }
 
-Future<BalanceInputResult?> showBalanceInputSheet(BuildContext context) {
-  return showModalBottomSheet<BalanceInputResult>(
+Future<BalanceInputResult?> showCreateBalanceSheet(BuildContext context) {
+  return showDialog<BalanceInputResult>(
     context: context,
-    isScrollControlled: true,
-    useSafeArea: true,
-    shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-    ),
-    builder: (_) => const _BalanceInputSheet(),
+    builder: (_) => const _CreateBalanceSheet(),
   );
 }
 
@@ -48,14 +43,14 @@ class _CategoryRow {
   }
 }
 
-class _BalanceInputSheet extends ConsumerStatefulWidget {
-  const _BalanceInputSheet();
+class _CreateBalanceSheet extends ConsumerStatefulWidget {
+  const _CreateBalanceSheet();
 
   @override
-  ConsumerState<_BalanceInputSheet> createState() => _BalanceInputSheetState();
+  ConsumerState<_CreateBalanceSheet> createState() => _CreateBalanceSheetState();
 }
 
-class _BalanceInputSheetState extends ConsumerState<_BalanceInputSheet> {
+class _CreateBalanceSheetState extends ConsumerState<_CreateBalanceSheet> {
   int _mode = 0;
   final _totalController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -119,27 +114,17 @@ class _BalanceInputSheetState extends ConsumerState<_BalanceInputSheet> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final bottomInset = MediaQuery.of(context).viewInsets.bottom;
 
-    return Padding(
-      padding: EdgeInsets.only(bottom: bottomInset),
-      child: Form(
-        key: _formKey,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const SizedBox(height: 8),
-            Container(
-              width: 32,
-              height: 4,
-              decoration: BoxDecoration(
-                color: Colors.grey[300],
-                borderRadius: BorderRadius.circular(2),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16, 12, 8, 0),
-              child: Row(
+    return Dialog(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Row(
                 children: [
                   Expanded(
                     child: Text(
@@ -153,31 +138,28 @@ class _BalanceInputSheetState extends ConsumerState<_BalanceInputSheet> {
                   ),
                 ],
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: SegmentedButton<int>(
-                segments: [
-                  ButtonSegment(
-                    value: 0,
-                    label: Text(l10n.dashboardBalanceInputModeTotal),
-                  ),
-                  ButtonSegment(
-                    value: 1,
-                    label: Text(l10n.dashboardBalanceInputModeCategory),
-                  ),
-                ],
-                selected: {_mode},
-                onSelectionChanged: (v) => setState(() => _mode = v.first),
+              RadioGroup<int>(
+                groupValue: _mode,
+                onChanged: (v) => setState(() => _mode = v ?? _mode),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Radio<int>(value: 0),
+                    Text(l10n.dashboardBalanceInputModeTotal),
+                    const SizedBox(width: 12),
+                    Radio<int>(value: 1),
+                    Text(l10n.dashboardBalanceInputModeCategory),
+                  ],
+                ),
               ),
-            ),
-            const SizedBox(height: 8),
-            if (_mode == 0)
-              _buildTotalMode(l10n)
-            else
-              _buildCategoryMode(l10n),
-            const SizedBox(height: 16),
-          ],
+              const SizedBox(height: 8),
+              if (_mode == 0)
+                _buildTotalMode(l10n)
+              else
+                _buildCategoryMode(l10n),
+              const SizedBox(height: 16),
+            ],
+          ),
         ),
       ),
     );
@@ -210,9 +192,10 @@ class _BalanceInputSheetState extends ConsumerState<_BalanceInputSheet> {
         if (_rows.isNotEmpty)
           ConstrainedBox(
             constraints: BoxConstraints(
-              maxHeight: MediaQuery.of(context).size.height * 0.35,
+              maxHeight: 120,
             ),
             child: ListView.builder(
+              physics: const ClampingScrollPhysics(),
               shrinkWrap: true,
               itemCount: _rows.length,
               itemBuilder: (context, index) => _buildCategoryRow(index, l10n),
@@ -265,7 +248,7 @@ class _BalanceInputSheetState extends ConsumerState<_BalanceInputSheet> {
       child: Row(
         children: [
           Expanded(
-            flex: 3,
+            flex: 2,
             child: TextFormField(
               controller: row.nameController,
               decoration: InputDecoration(
@@ -319,3 +302,6 @@ class _BalanceInputSheetState extends ConsumerState<_BalanceInputSheet> {
     );
   }
 }
+
+
+

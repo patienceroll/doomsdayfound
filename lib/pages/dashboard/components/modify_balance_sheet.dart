@@ -4,13 +4,8 @@ import 'package:doomsdayfound/l10n/app_localizations.dart';
 import 'package:doomsdayfound/util/money/input_formatter.dart';
 
 Future<double?> showModifyBalanceSheet(BuildContext context) {
-  return showModalBottomSheet<double>(
+  return showDialog<double>(
     context: context,
-    isScrollControlled: true,
-    useSafeArea: true,
-    shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-    ),
     builder: (_) => const _ModifyBalanceSheet(),
   );
 }
@@ -41,27 +36,17 @@ class _ModifyBalanceSheetState extends State<_ModifyBalanceSheet> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final bottomInset = MediaQuery.of(context).viewInsets.bottom;
 
-    return Padding(
-      padding: EdgeInsets.only(bottom: bottomInset),
-      child: Form(
-        key: _formKey,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const SizedBox(height: 8),
-            Container(
-              width: 32,
-              height: 4,
-              decoration: BoxDecoration(
-                color: Colors.grey[300],
-                borderRadius: BorderRadius.circular(2),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16, 12, 8, 0),
-              child: Row(
+    return Dialog(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Row(
                 children: [
                   Expanded(
                     child: Text(
@@ -75,10 +60,8 @@ class _ModifyBalanceSheetState extends State<_ModifyBalanceSheet> {
                   ),
                 ],
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: TextFormField(
+              const SizedBox(height: 8),
+              TextFormField(
                 controller: _controller,
                 decoration: InputDecoration(
                   labelText: l10n.dashboardBalanceInputTotalHint,
@@ -100,20 +83,16 @@ class _ModifyBalanceSheetState extends State<_ModifyBalanceSheet> {
                   return null;
                 },
               ),
-            ),
-            const SizedBox(height: 8),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: FilledButton(
+              const SizedBox(height: 16),
+              FilledButton(
                 onPressed: _confirm,
                 style: FilledButton.styleFrom(
                   minimumSize: const Size(double.infinity, 48),
                 ),
                 child: Text(l10n.dashboardBalanceInputConfirm),
               ),
-            ),
-            const SizedBox(height: 16),
-          ],
+            ],
+          ),
         ),
       ),
     );

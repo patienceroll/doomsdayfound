@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:doomsdayfound/database/db_helper.dart';
 import 'package:doomsdayfound/l10n/app_localizations.dart';
 import 'package:doomsdayfound/providers/balance_provider.dart';
-import 'package:doomsdayfound/pages/dashboard/components/balance_input_sheet.dart';
+import 'package:doomsdayfound/pages/dashboard/components/create_balance_sheet.dart';
 import 'package:doomsdayfound/pages/dashboard/components/modify_balance_sheet.dart';
 import 'package:doomsdayfound/pages/dashboard/components/spend_sheet.dart';
 
@@ -12,7 +12,7 @@ class DashboardPage extends ConsumerWidget {
   const DashboardPage({super.key});
 
   Future<void> _openBalanceInput(BuildContext context, WidgetRef ref) async {
-    final result = await showBalanceInputSheet(context);
+    final result = await showCreateBalanceSheet(context);
     if (result == null) return;
 
     await saveBalanceSnapshot(
