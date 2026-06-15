@@ -34,8 +34,9 @@ class _CategoryRow {
   final TextEditingController nameController;
   final TextEditingController amountController;
 
-  _CategoryRow() : nameController = TextEditingController(),
-                   amountController = TextEditingController();
+  _CategoryRow()
+    : nameController = TextEditingController(),
+      amountController = TextEditingController();
 
   void dispose() {
     nameController.dispose();
@@ -47,7 +48,8 @@ class _CreateBalanceSheet extends ConsumerStatefulWidget {
   const _CreateBalanceSheet();
 
   @override
-  ConsumerState<_CreateBalanceSheet> createState() => _CreateBalanceSheetState();
+  ConsumerState<_CreateBalanceSheet> createState() =>
+      _CreateBalanceSheetState();
 }
 
 class _CreateBalanceSheetState extends ConsumerState<_CreateBalanceSheet> {
@@ -96,18 +98,17 @@ class _CreateBalanceSheetState extends ConsumerState<_CreateBalanceSheet> {
       if (_rows.isEmpty) return;
       final categories = _rows
           .where((r) => r.nameController.text.trim().isNotEmpty)
-          .map((r) => CategoryEntry(
-                name: r.nameController.text.trim(),
-                balance: double.tryParse(r.amountController.text) ?? 0,
-              ))
+          .map(
+            (r) => CategoryEntry(
+              name: r.nameController.text.trim(),
+              balance: double.tryParse(r.amountController.text) ?? 0,
+            ),
+          )
           .toList();
-      final total = categories.fold<double>(
-        0,
-        (sum, c) => sum + c.balance,
-      );
-      Navigator.of(context).pop(
-        BalanceInputResult(totalBalance: total, categories: categories),
-      );
+      final total = categories.fold<double>(0, (sum, c) => sum + c.balance);
+      Navigator.of(
+        context,
+      ).pop(BalanceInputResult(totalBalance: total, categories: categories));
     }
   }
 
@@ -124,19 +125,22 @@ class _CreateBalanceSheetState extends ConsumerState<_CreateBalanceSheet> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      l10n.dashboardBalanceInputTitle,
-                      style: Theme.of(context).textTheme.titleMedium,
+              Padding(
+                padding: const EdgeInsets.only(left: 12),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        l10n.dashboardBalanceInputTitle,
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
                     ),
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.close),
-                    onPressed: () => Navigator.of(context).pop(),
-                  ),
-                ],
+                    IconButton(
+                      icon: const Icon(Icons.close),
+                      onPressed: () => Navigator.of(context).pop(),
+                    ),
+                  ],
+                ),
               ),
               RadioGroup<int>(
                 groupValue: _mode,
@@ -177,8 +181,9 @@ class _CreateBalanceSheetState extends ConsumerState<_CreateBalanceSheet> {
         ),
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
         inputFormatters: [AmountInputFormatter()],
-        validator: (v) =>
-            (v == null || v.trim().isEmpty) ? l10n.dashboardBalanceInputRequired : null,
+        validator: (v) => (v == null || v.trim().isEmpty)
+            ? l10n.dashboardBalanceInputRequired
+            : null,
         autofocus: true,
         onFieldSubmitted: (_) => _confirm(),
       ),
@@ -191,14 +196,15 @@ class _CreateBalanceSheetState extends ConsumerState<_CreateBalanceSheet> {
       children: [
         if (_rows.isNotEmpty)
           ConstrainedBox(
-            constraints: BoxConstraints(
-              maxHeight: 120,
-            ),
-            child: ListView.builder(
+            constraints: BoxConstraints(maxHeight: 120),
+            child: ScrollConfiguration(
+              behavior: MaterialScrollBehavior().copyWith(overscroll: false),
+              child: ListView.builder(
               physics: const ClampingScrollPhysics(),
               shrinkWrap: true,
               itemCount: _rows.length,
               itemBuilder: (context, index) => _buildCategoryRow(index, l10n),
+              ),
             ),
           ),
         TextButton.icon(
@@ -244,7 +250,7 @@ class _CreateBalanceSheetState extends ConsumerState<_CreateBalanceSheet> {
   Widget _buildCategoryRow(int index, AppLocalizations l10n) {
     final row = _rows[index];
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+      padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
         children: [
           Expanded(
@@ -256,10 +262,9 @@ class _CreateBalanceSheetState extends ConsumerState<_CreateBalanceSheet> {
                 border: const OutlineInputBorder(),
                 isDense: true,
               ),
-              validator: (v) =>
-                  (v == null || v.trim().isEmpty)
-                      ? l10n.dashboardBalanceInputRequired
-                      : null,
+              validator: (v) => (v == null || v.trim().isEmpty)
+                  ? l10n.dashboardBalanceInputRequired
+                  : null,
             ),
           ),
           const SizedBox(width: 8),
@@ -273,8 +278,9 @@ class _CreateBalanceSheetState extends ConsumerState<_CreateBalanceSheet> {
                 border: const OutlineInputBorder(),
                 isDense: true,
               ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
+              keyboardType: const TextInputType.numberWithOptions(
+                decimal: true,
+              ),
               inputFormatters: [AmountInputFormatter()],
               validator: (v) {
                 if (v == null || v.trim().isEmpty) {
@@ -290,18 +296,18 @@ class _CreateBalanceSheetState extends ConsumerState<_CreateBalanceSheet> {
             ),
           ),
           if (_rows.length > 1)
-            IconButton(
-              icon: const Icon(Icons.remove_circle_outline),
-              color: Theme.of(context).colorScheme.error,
-              onPressed: () => _removeRow(index),
+            InkWell(
+              onTap: () => _removeRow(index),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 8),
+                child: Icon(
+                  Icons.remove_circle_outline,
+                  color: Theme.of(context).colorScheme.error,
+                ),
+              ),
             )
-          else
-            const SizedBox(width: 48),
         ],
       ),
     );
   }
 }
-
-
-
