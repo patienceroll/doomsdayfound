@@ -15,3 +15,26 @@ Future<AppDatabase> getDatabase() async {
   _database = AppDatabase(NativeDatabase.createInBackground(file));
   return Future.value(_database);
 }
+
+Future<void> saveBalanceSnapshot({
+  required double totalBalance,
+  List<({String name, double balance, int type})>? accounts,
+}) async {
+  final db = await getDatabase();
+  final snapshotId = await db.into(db.balanceSnapshots).insert(
+    BalanceSnapshotsCompanion.insert(totalBalance: totalBalance),
+  );
+
+  if (accounts != null && accounts.isNotEmpty) {
+    for (final a in accounts) {
+      await db.into(db.accounts).insert(
+        AccountsCompanion.insert(
+          snapshotId: snapshotId,
+          name: a.name,
+          balance: a.balance,
+          type: a.type,
+        ),
+      );
+    }
+  }
+}

@@ -1,12 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:doomsdayfound/database/db_helper.dart';
 import 'package:doomsdayfound/l10n/app_localizations.dart';
 import 'package:doomsdayfound/providers/balance_provider.dart';
 import 'package:doomsdayfound/pages/dashboard/balance_input_sheet.dart';
 
 class DashboardPage extends ConsumerWidget {
   const DashboardPage({super.key});
+
+  Future<void> _openBalanceInput(BuildContext context, WidgetRef ref) async {
+    final result = await showBalanceInputSheet(context);
+    if (result == null) return;
+
+    await saveBalanceSnapshot(
+      totalBalance: result.totalBalance,
+      accounts: result.categories
+          ?.map((c) => (name: c.name, balance: c.balance, type: c.type))
+          .toList(),
+    );
+
+    ref.invalidate(balanceProvider);
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -21,7 +36,7 @@ class DashboardPage extends ConsumerWidget {
         data: (snapshot) => snapshot == null
             ? Center(
                 child: ElevatedButton(
-                  onPressed: () => showBalanceInputSheet(context),
+                    onPressed: () => _openBalanceInput(context, ref),
                   child: Text(l10n.dashboradCreateBank),
                 ),
               )
@@ -32,7 +47,7 @@ class DashboardPage extends ConsumerWidget {
                     Text('Balance: ${snapshot.totalBalance}'),
                     const SizedBox(height: 16),
                     FilledButton(
-                      onPressed: () => showBalanceInputSheet(context),
+                      onPressed: () => _openBalanceInput(context, ref),
                       child: Text(l10n.dashboardBalanceInputTitle),
                     ),
                   ],

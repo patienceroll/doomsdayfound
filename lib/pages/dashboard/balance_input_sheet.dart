@@ -14,8 +14,13 @@ class BalanceInputResult {
 class CategoryEntry {
   final String name;
   final double balance;
+  final int type;
 
-  const CategoryEntry({required this.name, required this.balance});
+  const CategoryEntry({
+    required this.name,
+    required this.balance,
+    this.type = 0,
+  });
 }
 
 Future<BalanceInputResult?> showBalanceInputSheet(BuildContext context) {
@@ -98,6 +103,7 @@ class _BalanceInputSheetState extends ConsumerState<_BalanceInputSheet> {
   double get _categorySum {
     double sum = 0;
     for (final row in _rows) {
+      if (row.nameController.text.trim().isEmpty) continue;
       final amount = double.tryParse(row.amountController.text);
       if (amount != null && amount > 0) sum += amount;
     }
@@ -130,8 +136,12 @@ class _BalanceInputSheetState extends ConsumerState<_BalanceInputSheet> {
                 balance: double.tryParse(r.amountController.text) ?? 0,
               ))
           .toList();
+      final total = categories.fold<double>(
+        0,
+        (sum, c) => sum + c.balance,
+      );
       Navigator.of(context).pop(
-        BalanceInputResult(totalBalance: _categorySum, categories: categories),
+        BalanceInputResult(totalBalance: total, categories: categories),
       );
     }
   }
