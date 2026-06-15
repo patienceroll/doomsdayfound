@@ -79,7 +79,7 @@ class _SpendSheetState extends State<_SpendSheet> {
                     return l10n.dashboardBalanceInputRequired;
                   }
                   final amount = double.tryParse(v);
-                  if (amount == null || amount <= 0) {
+                  if (amount == null) {
                     return l10n.dashboardBalanceInputInvalidAmount;
                   }
                   return null;

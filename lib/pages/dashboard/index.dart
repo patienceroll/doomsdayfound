@@ -1,3 +1,4 @@
+import 'package:doomsdayfound/components/count_up.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -74,7 +75,7 @@ class DashboardPage extends ConsumerWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text('Balance: ${snapshot.totalBalance}'),
+                    CountUp(value: snapshot.totalBalance),
                     const SizedBox(height: 24),
                     Row(
                       mainAxisSize: MainAxisSize.min,

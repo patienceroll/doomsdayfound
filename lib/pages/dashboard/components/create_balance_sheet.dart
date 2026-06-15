@@ -281,7 +281,7 @@ class _CreateBalanceSheetState extends ConsumerState<_CreateBalanceSheet> {
                   return l10n.dashboardBalanceInputRequired;
                 }
                 final amount = double.tryParse(v);
-                if (amount == null || amount <= 0) {
+                if (amount == null) {
                   return l10n.dashboardBalanceInputInvalidAmount;
                 }
                 return null;
