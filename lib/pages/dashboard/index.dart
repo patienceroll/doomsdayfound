@@ -43,11 +43,12 @@ class DashboardPage extends ConsumerWidget {
   Future<void> _openEarn(
     BuildContext context,
     WidgetRef ref,
-    BalanceSnapshot snapshot,
+    BalanceProviderValue value,
   ) async {
     final result = await showEarnSheet(context);
     if (result == null) return;
 
+    final snapshot = value.balanceSnapshots!;
     final newBalance = snapshot.totalBalance + result.amount;
     await recordTransaction(
       snapshotId: snapshot.id,
@@ -63,11 +64,12 @@ class DashboardPage extends ConsumerWidget {
   Future<void> _openSpend(
     BuildContext context,
     WidgetRef ref,
-    BalanceSnapshot snapshot,
+    BalanceProviderValue value,
   ) async {
     final result = await showSpendSheet(context);
     if (result == null) return;
 
+    final snapshot = value.balanceSnapshots!;
     final newBalance = snapshot.totalBalance - result.amount;
     await recordTransaction(
       snapshotId: snapshot.id,
@@ -88,9 +90,10 @@ class DashboardPage extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(title: Text(l10n.dashboardTitle)),
       body: balanceAsync.when(
+        skipLoadingOnReload: true,
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, s) => Center(child: Text('Error: $e')),
-        data: (snapshot) => snapshot == null
+        data: (value) => value.balanceSnapshots == null
             ? Center(
                 child: ElevatedButton(
                     onPressed: () => _openBalanceInput(context, ref),
@@ -101,21 +104,21 @@ class DashboardPage extends ConsumerWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    CountUp(value: snapshot.totalBalance),
+                    CountUp(value: value.balanceSnapshots!.totalBalance),
                     const SizedBox(height: 24),
                     Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         FilledButton.tonalIcon(
                           onPressed: () =>
-                              _openEarn(context, ref, snapshot),
+                              _openEarn(context, ref, value),
                           icon: const Icon(Icons.add_circle_outline),
                           label: Text(l10n.dashboardEarnTitle),
                         ),
                         const SizedBox(width: 12),
                         FilledButton.tonalIcon(
                           onPressed: () =>
-                              _openSpend(context, ref, snapshot),
+                              _openSpend(context, ref, value),
                           icon: const Icon(Icons.remove_circle_outline),
                           label: Text(l10n.dashboardSpendTitle),
                         ),
