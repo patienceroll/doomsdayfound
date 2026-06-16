@@ -69,6 +69,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get dashboardEarnHint => '赚了多少钱';
 
   @override
+  String get dashboardUnallocated => '未分配';
+
+  @override
   String get dashboardManageCategories => '拆分余额';
 
   @override

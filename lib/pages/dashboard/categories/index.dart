@@ -38,6 +38,17 @@ class ManageCategoriesPageState extends ConsumerState<ManageCategoriesPage> {
   final _formKey = GlobalKey<FormState>();
   List<_CategoryRow> _rows = [];
 
+  double get _allocatedSum {
+    double sum = 0;
+    for (final row in _rows) {
+      final amount = double.tryParse(row.amountController.text);
+      if (amount != null && amount > 0) sum += amount;
+    }
+    return sum;
+  }
+
+  double get _remainingBalance => widget.currentBalance - _allocatedSum;
+
   @override
   void initState() {
     super.initState();
@@ -129,6 +140,22 @@ class ManageCategoriesPageState extends ConsumerState<ManageCategoriesPage> {
                 label: Text(l10n.dashboardBalanceInputAddCategory),
               ),
               const SizedBox(height: 8),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(l10n.dashboardUnallocated),
+                  Text(
+                    '¥ ${_remainingBalance.toStringAsFixed(2)}',
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: _remainingBalance >= 0
+                          ? null
+                          : Theme.of(context).colorScheme.error,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
               FilledButton(
                 onPressed: _save,
                 style: FilledButton.styleFrom(
@@ -178,6 +205,7 @@ class ManageCategoriesPageState extends ConsumerState<ManageCategoriesPage> {
                 decimal: true,
               ),
               inputFormatters: [AmountInputFormatter()],
+              onChanged: (_) => setState(() {}),
               validator: (v) {
                 if (v == null || v.trim().isEmpty) {
                   return l10n.dashboardBalanceInputRequired;

@@ -69,6 +69,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dashboardEarnHint => 'How much did you earn';
 
   @override
+  String get dashboardUnallocated => 'Unallocated';
+
+  @override
   String get dashboardManageCategories => 'Split Balance';
 
   @override

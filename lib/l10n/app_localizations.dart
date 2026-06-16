@@ -218,6 +218,12 @@ abstract class AppLocalizations {
   /// **'How much did you earn'**
   String get dashboardEarnHint;
 
+  /// No description provided for @dashboardUnallocated.
+  ///
+  /// In en, this message translates to:
+  /// **'Unallocated'**
+  String get dashboardUnallocated;
+
   /// No description provided for @dashboardManageCategories.
   ///
   /// In en, this message translates to:
