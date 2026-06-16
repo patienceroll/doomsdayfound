@@ -9,6 +9,15 @@ class AppLocalizationsZh extends AppLocalizations {
   AppLocalizationsZh([String locale = 'zh']) : super(locale);
 
   @override
+  String get confirm => '确定';
+
+  @override
+  String get cancel => '取消';
+
+  @override
+  String get prompt => '提示';
+
+  @override
   String get tabbarOverview => '总览';
 
   @override
@@ -48,7 +57,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get dashboardBalanceInputConfirm => '确认';
 
   @override
-  String get dashboardBalanceInputRequired => '请填写此项';
+  String get dashboardBalanceInputRequired => '请输入完整的内容';
 
   @override
   String get dashboardBalanceInputInvalidAmount => '请输入有效金额';

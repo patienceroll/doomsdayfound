@@ -9,6 +9,15 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
+  String get confirm => 'OK';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get prompt => 'Prompt';
+
+  @override
   String get tabbarOverview => 'overview';
 
   @override
@@ -48,7 +57,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dashboardBalanceInputConfirm => 'Confirm';
 
   @override
-  String get dashboardBalanceInputRequired => 'Required';
+  String get dashboardBalanceInputRequired => 'Please fill in all fields';
 
   @override
   String get dashboardBalanceInputInvalidAmount => 'Invalid amount';

@@ -98,6 +98,24 @@ abstract class AppLocalizations {
     Locale('zh'),
   ];
 
+  /// No description provided for @confirm.
+  ///
+  /// In en, this message translates to:
+  /// **'OK'**
+  String get confirm;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// No description provided for @prompt.
+  ///
+  /// In en, this message translates to:
+  /// **'Prompt'**
+  String get prompt;
+
   /// No description provided for @tabbarOverview.
   ///
   /// In en, this message translates to:
@@ -179,7 +197,7 @@ abstract class AppLocalizations {
   /// No description provided for @dashboardBalanceInputRequired.
   ///
   /// In en, this message translates to:
-  /// **'Required'**
+  /// **'Please fill in all fields'**
   String get dashboardBalanceInputRequired;
 
   /// No description provided for @dashboardBalanceInputInvalidAmount.

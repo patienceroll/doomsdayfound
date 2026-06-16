@@ -1,5 +1,8 @@
 {
   "@@locale": "en",
+  "confirm": "OK",
+  "cancel": "Cancel",
+  "prompt": "Prompt",
   "tabbarOverview": "overview",
   "tabbarSettings": "settings",
   "themeSystem": "system",
@@ -13,7 +16,7 @@
   "dashboardBalanceInputAmount": "Amount",
   "dashboardBalanceInputAddCategory": "Add category",
   "dashboardBalanceInputConfirm": "Confirm",
-  "dashboardBalanceInputRequired": "Required",
+  "dashboardBalanceInputRequired": "Please fill in all fields",
   "dashboardBalanceInputInvalidAmount": "Invalid amount",
   "dashboardSpendTitle": "Expense",
   "dashboardSpendHint": "How much did you spend",

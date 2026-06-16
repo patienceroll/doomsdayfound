@@ -35,7 +35,7 @@ class ManageCategoriesPage extends ConsumerStatefulWidget {
 }
 
 class ManageCategoriesPageState extends ConsumerState<ManageCategoriesPage> {
-  final _formKey = GlobalKey<FormState>();
+  int _editingIndex = -1;
   List<_CategoryRow> _rows = [];
 
   double get _allocatedSum {
@@ -74,18 +74,50 @@ class ManageCategoriesPageState extends ConsumerState<ManageCategoriesPage> {
   }
 
   void _addRow() {
-    setState(() => _rows.add(_CategoryRow()));
+    final index = _rows.length;
+    setState(() {
+      _rows.add(_CategoryRow());
+      _editingIndex = index;
+    });
   }
 
   void _removeRow(int index) {
     setState(() {
       _rows[index].dispose();
       _rows.removeAt(index);
+      if (_editingIndex == index) _editingIndex = -1;
     });
   }
 
+  bool _validate() {
+    for (final row in _rows) {
+      if (row.nameController.text.trim().isEmpty) return false;
+      final amount = double.tryParse(row.amountController.text);
+      if (amount == null || amount <= 0) return false;
+    }
+    return true;
+  }
+
   Future<void> _save() async {
-    if (!_formKey.currentState!.validate()) return;
+    if (!_validate()) {
+      if (mounted) {
+        final l10n = AppLocalizations.of(context)!;
+        showDialog(
+          context: context,
+          builder: (ctx) => AlertDialog(
+            title: Text(l10n.prompt),
+            content: Text(l10n.dashboardBalanceInputRequired),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(ctx).pop(),
+                child: Text(l10n.confirm),
+              ),
+            ],
+          ),
+        );
+      }
+      return;
+    }
 
     final categories = _rows
         .where((r) => r.nameController.text.trim().isNotEmpty)
@@ -117,54 +149,51 @@ class ManageCategoriesPageState extends ConsumerState<ManageCategoriesPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: _rows.isEmpty
-                    ? Center(child: Text(l10n.dashboardBalanceInputAddCategory))
-                    : ScrollConfiguration(
-                        behavior: MaterialScrollBehavior().copyWith(overscroll: false),
-                        child: ListView.builder(
-                          physics: const ClampingScrollPhysics(),
-                          itemCount: _rows.length,
-                          itemBuilder: (context, index) => _buildRow(index, l10n),
-                        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Expanded(
+              child: _rows.isEmpty
+                  ? Center(child: Text(l10n.dashboardBalanceInputAddCategory))
+                  : ScrollConfiguration(
+                      behavior: MaterialScrollBehavior().copyWith(overscroll: false),
+                      child: ListView.builder(
+                        physics: const ClampingScrollPhysics(),
+                        itemCount: _rows.length,
+                        itemBuilder: (context, index) => _buildRow(index, l10n),
                       ),
-              ),
-              TextButton.icon(
-                onPressed: _addRow,
-                icon: const Icon(Icons.add),
-                label: Text(l10n.dashboardBalanceInputAddCategory),
-              ),
-              const SizedBox(height: 8),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(l10n.dashboardUnallocated),
-                  Text(
-                    '¥ ${_remainingBalance.toStringAsFixed(2)}',
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: _remainingBalance >= 0
-                          ? null
-                          : Theme.of(context).colorScheme.error,
                     ),
+            ),
+            TextButton.icon(
+              onPressed: _addRow,
+              icon: const Icon(Icons.add),
+              label: Text(l10n.dashboardBalanceInputAddCategory),
+            ),
+            const SizedBox(height: 8),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(l10n.dashboardUnallocated),
+                Text(
+                  '¥ ${_remainingBalance.toStringAsFixed(2)}',
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: _remainingBalance >= 0
+                        ? null
+                        : Theme.of(context).colorScheme.error,
                   ),
-                ],
-              ),
-              const SizedBox(height: 8),
-              FilledButton(
-                onPressed: _save,
-                style: FilledButton.styleFrom(
-                  minimumSize: const Size(double.infinity, 48),
                 ),
-                child: Text(l10n.dashboardBalanceInputConfirm),
+              ],
+            ),
+            const SizedBox(height: 8),
+            FilledButton(
+              onPressed: _save,
+              style: FilledButton.styleFrom(
+                minimumSize: const Size(double.infinity, 48),
               ),
-            ],
-          ),
+              child: Text(l10n.dashboardBalanceInputConfirm),
+            ),
+          ],
         ),
       ),
     );
@@ -172,64 +201,74 @@ class ManageCategoriesPageState extends ConsumerState<ManageCategoriesPage> {
 
   Widget _buildRow(int index, AppLocalizations l10n) {
     final row = _rows[index];
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
-      child: Row(
-        children: [
-          Expanded(
-            flex: 2,
-            child: TextFormField(
-              controller: row.nameController,
-              decoration: InputDecoration(
-                labelText: l10n.dashboardBalanceInputCategoryName,
-                border: const OutlineInputBorder(),
-                isDense: true,
-              ),
-              validator: (v) => (v == null || v.trim().isEmpty)
-                  ? l10n.dashboardBalanceInputRequired
-                  : null,
+    final isEditing = _editingIndex == index;
+
+    return Card(
+      margin: const EdgeInsets.symmetric(vertical: 4),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        child: Row(
+          children: [
+            Expanded(
+              flex: 2,
+              child: isEditing
+                  ? TextFormField(
+                      controller: row.nameController,
+                      decoration: InputDecoration(
+                        labelText: l10n.dashboardBalanceInputCategoryName,
+                        border: const OutlineInputBorder(),
+                        isDense: true,
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                      ),
+                    )
+                  : Text(
+                      row.nameController.text,
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
             ),
-          ),
-          const SizedBox(width: 8),
-          Expanded(
-            flex: 2,
-            child: TextFormField(
-              controller: row.amountController,
-              decoration: InputDecoration(
-                labelText: l10n.dashboardBalanceInputAmount,
-                prefixText: '¥ ',
-                border: const OutlineInputBorder(),
-                isDense: true,
-              ),
-              keyboardType: const TextInputType.numberWithOptions(
-                decimal: true,
-              ),
-              inputFormatters: [AmountInputFormatter()],
-              onChanged: (_) => setState(() {}),
-              validator: (v) {
-                if (v == null || v.trim().isEmpty) {
-                  return l10n.dashboardBalanceInputRequired;
-                }
-                final amount = double.tryParse(v);
-                if (amount == null) {
-                  return l10n.dashboardBalanceInputInvalidAmount;
-                }
-                return null;
-              },
+            const SizedBox(width: 8),
+            Expanded(
+              flex: 2,
+              child: isEditing
+                  ? TextFormField(
+                      controller: row.amountController,
+                      decoration: InputDecoration(
+                        labelText: l10n.dashboardBalanceInputAmount,
+                        prefixText: '¥ ',
+                        border: const OutlineInputBorder(),
+                        isDense: true,
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                      ),
+                      keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                      inputFormatters: [AmountInputFormatter()],
+                      onChanged: (_) => setState(() {}),
+                    )
+                  : Text(
+                      '¥ ${double.tryParse(row.amountController.text)?.toStringAsFixed(2) ?? '0.00'}',
+                      textAlign: TextAlign.end,
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
             ),
-          ),
-          if (_rows.length > 1)
-            InkWell(
-              onTap: () => _removeRow(index),
-              child: Padding(
-                padding: const EdgeInsets.only(left: 8),
-                child: Icon(
-                  Icons.remove_circle_outline,
-                  color: Theme.of(context).colorScheme.error,
+            if (isEditing)
+              IconButton(
+                icon: const Icon(Icons.check, size: 20),
+                onPressed: () => setState(() => _editingIndex = -1),
+              )
+            else ...[
+              IconButton(
+                icon: const Icon(Icons.edit, size: 20),
+                onPressed: () => setState(() => _editingIndex = index),
+              ),
+              if (_rows.length > 1)
+                IconButton(
+                  icon: Icon(Icons.delete_outline, size: 20, color: Theme.of(context).colorScheme.error),
+                  onPressed: () => _removeRow(index),
                 ),
-              ),
-            ),
-        ],
+            ],
+          ],
+        ),
       ),
     );
   }
