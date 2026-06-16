@@ -47,6 +47,26 @@ Future<List<Account>> getAccountsForSnapshot(int snapshotId) async {
       .get();
 }
 
+Future<void> replaceAccountsForSnapshot({
+  required int snapshotId,
+  required List<({String name, double balance, int type})> accounts,
+}) async {
+  final db = await getDatabase();
+
+  await (db.delete(db.accounts)..where((t) => t.snapshotId.equals(snapshotId))).go();
+
+  for (final a in accounts) {
+    await db.into(db.accounts).insert(
+      AccountsCompanion.insert(
+        snapshotId: snapshotId,
+        name: a.name,
+        balance: a.balance,
+        type: a.type,
+      ),
+    );
+  }
+}
+
 Future<void> recordTransaction({
   required int snapshotId,
   required double newBalance,

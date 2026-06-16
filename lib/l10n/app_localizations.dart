@@ -221,7 +221,7 @@ abstract class AppLocalizations {
   /// No description provided for @dashboardManageCategories.
   ///
   /// In en, this message translates to:
-  /// **'Manage Categories'**
+  /// **'Split Balance'**
   String get dashboardManageCategories;
 
   /// No description provided for @dashboardModifyBalance.

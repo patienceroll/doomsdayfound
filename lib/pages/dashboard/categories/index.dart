@@ -85,10 +85,12 @@ class ManageCategoriesPageState extends ConsumerState<ManageCategoriesPage> {
         ))
         .toList();
 
-    await saveBalanceSnapshot(
-      totalBalance: widget.currentBalance,
-      accounts: categories.isNotEmpty ? categories : null,
-    );
+    if (categories.isNotEmpty) {
+      await replaceAccountsForSnapshot(
+        snapshotId: widget.snapshotId,
+        accounts: categories,
+      );
+    }
 
     ref.invalidate(balanceProvider);
     if (mounted) Navigator.of(context).pop();

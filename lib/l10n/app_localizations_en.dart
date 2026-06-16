@@ -69,7 +69,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dashboardEarnHint => 'How much did you earn';
 
   @override
-  String get dashboardManageCategories => 'Manage Categories';
+  String get dashboardManageCategories => 'Split Balance';
 
   @override
   String get dashboardModifyBalance => 'Modify balance';

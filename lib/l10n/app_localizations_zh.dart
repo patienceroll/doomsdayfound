@@ -69,7 +69,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get dashboardEarnHint => '赚了多少钱';
 
   @override
-  String get dashboardManageCategories => '管理分类';
+  String get dashboardManageCategories => '拆分余额';
 
   @override
   String get dashboardModifyBalance => '修改余额';
