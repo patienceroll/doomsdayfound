@@ -33,12 +33,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get dashboardBalanceInputTitle => '录入余额';
 
   @override
-  String get dashboardBalanceInputModeTotal => '总余额';
-
-  @override
-  String get dashboardBalanceInputModeCategory => '分类录入';
-
-  @override
   String get dashboardBalanceInputTotalHint => '请输入总余额';
 
   @override
@@ -49,9 +43,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get dashboardBalanceInputAddCategory => '添加类目';
-
-  @override
-  String get dashboardBalanceInputTotal => '合计';
 
   @override
   String get dashboardBalanceInputConfirm => '确认';

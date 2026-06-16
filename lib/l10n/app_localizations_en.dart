@@ -33,12 +33,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dashboardBalanceInputTitle => 'Enter Balance';
 
   @override
-  String get dashboardBalanceInputModeTotal => 'Total';
-
-  @override
-  String get dashboardBalanceInputModeCategory => 'By Category';
-
-  @override
   String get dashboardBalanceInputTotalHint => 'Enter total balance';
 
   @override
@@ -49,9 +43,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get dashboardBalanceInputAddCategory => 'Add category';
-
-  @override
-  String get dashboardBalanceInputTotal => 'Total';
 
   @override
   String get dashboardBalanceInputConfirm => 'Confirm';

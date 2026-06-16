@@ -146,18 +146,6 @@ abstract class AppLocalizations {
   /// **'Enter Balance'**
   String get dashboardBalanceInputTitle;
 
-  /// No description provided for @dashboardBalanceInputModeTotal.
-  ///
-  /// In en, this message translates to:
-  /// **'Total'**
-  String get dashboardBalanceInputModeTotal;
-
-  /// No description provided for @dashboardBalanceInputModeCategory.
-  ///
-  /// In en, this message translates to:
-  /// **'By Category'**
-  String get dashboardBalanceInputModeCategory;
-
   /// No description provided for @dashboardBalanceInputTotalHint.
   ///
   /// In en, this message translates to:
@@ -181,12 +169,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Add category'**
   String get dashboardBalanceInputAddCategory;
-
-  /// No description provided for @dashboardBalanceInputTotal.
-  ///
-  /// In en, this message translates to:
-  /// **'Total'**
-  String get dashboardBalanceInputTotal;
 
   /// No description provided for @dashboardBalanceInputConfirm.
   ///
