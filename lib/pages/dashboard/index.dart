@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import 'package:doomsdayfound/database/db_helper.dart';
 import 'package:doomsdayfound/database/database.dart';
@@ -15,15 +16,10 @@ class DashboardPage extends ConsumerWidget {
   const DashboardPage({super.key});
 
   Future<void> _openBalanceInput(BuildContext context, WidgetRef ref) async {
-    final result = await showCreateBalanceSheet(context);
-    if (result == null) return;
+    final totalBalance = await showCreateBalanceSheet(context);
+    if (totalBalance == null) return;
 
-    await saveBalanceSnapshot(
-      totalBalance: result.totalBalance,
-      accounts: result.categories
-          ?.map((c) => (name: c.name, balance: c.balance, type: c.type))
-          .toList(),
-    );
+    await saveBalanceSnapshot(totalBalance: totalBalance);
 
     ref.invalidate(balanceProvider);
   }
@@ -37,6 +33,19 @@ class DashboardPage extends ConsumerWidget {
 
     await saveBalanceSnapshot(totalBalance: newBalance);
 
+    ref.invalidate(balanceProvider);
+  }
+
+  Future<void> _openManageCategories(
+    BuildContext context,
+    WidgetRef ref,
+    BalanceProviderValue value,
+  ) async {
+    final snapshot = value.balanceSnapshots!;
+    await context.push('/dashboard/categories', extra: {
+      'currentBalance': snapshot.totalBalance,
+      'snapshotId': snapshot.id,
+    });
     ref.invalidate(balanceProvider);
   }
 
@@ -93,47 +102,63 @@ class DashboardPage extends ConsumerWidget {
         skipLoadingOnReload: true,
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, s) => Center(child: Text('Error: $e')),
-        data: (value) => value.balanceSnapshots == null
-            ? Center(
-                child: ElevatedButton(
-                    onPressed: () => _openBalanceInput(context, ref),
-                  child: Text(l10n.dashboradCreateBank),
-                ),
-              )
-            : Center(
-                child: Column(
+        data: (value) {
+          if (value.balanceSnapshots == null) {
+            return Center(
+              child: ElevatedButton(
+                  onPressed: () => _openBalanceInput(context, ref),
+                child: Text(l10n.dashboradCreateBank),
+              ),
+            );
+          }
+
+          return Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                CountUp(value: value.balanceSnapshots!.totalBalance),
+                const SizedBox(height: 24),
+                Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    CountUp(value: value.balanceSnapshots!.totalBalance),
-                    const SizedBox(height: 24),
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        FilledButton.tonalIcon(
-                          onPressed: () =>
-                              _openEarn(context, ref, value),
-                          icon: const Icon(Icons.add_circle_outline),
-                          label: Text(l10n.dashboardEarnTitle),
-                        ),
-                        const SizedBox(width: 12),
-                        FilledButton.tonalIcon(
-                          onPressed: () =>
-                              _openSpend(context, ref, value),
-                          icon: const Icon(Icons.remove_circle_outline),
-                          label: Text(l10n.dashboardSpendTitle),
-                        ),
-                        const SizedBox(width: 12),
-                        FilledButton.icon(
-                          onPressed: () =>
-                              _openModifyBalance(context, ref),
-                          icon: const Icon(Icons.edit),
-                          label: Text(l10n.dashboardModifyBalance),
-                        ),
-                      ],
+                    FilledButton.tonalIcon(
+                      onPressed: () =>
+                          _openEarn(context, ref, value),
+                      icon: const Icon(Icons.add_circle_outline),
+                      label: Text(l10n.dashboardEarnTitle),
+                    ),
+                    const SizedBox(width: 12),
+                    FilledButton.tonalIcon(
+                      onPressed: () =>
+                          _openSpend(context, ref, value),
+                      icon: const Icon(Icons.remove_circle_outline),
+                      label: Text(l10n.dashboardSpendTitle),
                     ),
                   ],
                 ),
-              ),
+                const SizedBox(height: 8),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    FilledButton.icon(
+                      onPressed: () =>
+                          _openModifyBalance(context, ref),
+                      icon: const Icon(Icons.edit),
+                      label: Text(l10n.dashboardModifyBalance),
+                    ),
+                    const SizedBox(width: 12),
+                FilledButton.icon(
+                  onPressed: () =>
+                      _openManageCategories(context, ref, value),
+                  icon: const Icon(Icons.category),
+                  label: Text(l10n.dashboardManageCategories),
+                ),
+                  ],
+                ),
+              ],
+            ),
+          );
+        },
       ),
     );
   }

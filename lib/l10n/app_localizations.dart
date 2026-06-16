@@ -236,6 +236,12 @@ abstract class AppLocalizations {
   /// **'How much did you earn'**
   String get dashboardEarnHint;
 
+  /// No description provided for @dashboardManageCategories.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage Categories'**
+  String get dashboardManageCategories;
+
   /// No description provided for @dashboardModifyBalance.
   ///
   /// In en, this message translates to:

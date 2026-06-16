@@ -23,5 +23,6 @@
   "dashboardSpendRemark": "备注",
   "dashboardEarnTitle": "赚钱了",
   "dashboardEarnHint": "赚了多少钱",
+  "dashboardManageCategories": "管理分类",
   "dashboardModifyBalance": "修改余额"
 }

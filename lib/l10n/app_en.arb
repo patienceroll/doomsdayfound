@@ -23,5 +23,6 @@
   "dashboardSpendRemark": "Note",
   "dashboardEarnTitle": "Income",
   "dashboardEarnHint": "How much did you earn",
+  "dashboardManageCategories": "Manage Categories",
   "dashboardModifyBalance": "Modify balance"
 }

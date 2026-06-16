@@ -40,6 +40,13 @@ Future<void> saveBalanceSnapshot({
   }
 }
 
+Future<List<Account>> getAccountsForSnapshot(int snapshotId) async {
+  final db = await getDatabase();
+  return (db.select(db.accounts)
+        ..where((t) => t.snapshotId.equals(snapshotId)))
+      .get();
+}
+
 Future<void> recordTransaction({
   required int snapshotId,
   required double newBalance,
